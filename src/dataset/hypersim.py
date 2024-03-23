@@ -19,7 +19,7 @@ class Hypersimdataset(torch.utils.data.Dataset):
         jsonl_path = os.path.join(config['root_dir'], f'{mode}.jsonl')
 
         self.infos = load_from_jsonl(Path(jsonl_path))
-        scenes = list(map(lambda info: info['scene_id'], self.infos))
+        scenes = list(set(map(lambda info: info['scene_id'], self.infos)))
         print('Loaded {} scenes'.format(len(scenes)))
 
         for scene_id in sorted(scenes):
