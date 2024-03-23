@@ -387,7 +387,7 @@ class DepthGenerator(pl.LightningModule):
             img.paste(im_pred, (0, h))
             im = Image.fromarray(images[0, i])
             img.paste(im, (0, h * 2))
-            im_depth = Image.fromarray(plt.get_cmap('gray')(depth_inv_full[0, i])[..., :3])
+            im_depth = Image.fromarray(plt.get_cmap('gray')(depth_inv_full[0, i])[..., :3].astype(np.int8))
             img.paste(im_depth, (0, 0))
 
             imgs.append(img)
