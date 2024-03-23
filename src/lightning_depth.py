@@ -200,7 +200,7 @@ class DepthGenerator(pl.LightningModule):
         
         # compute image & save
         if self.trainer.global_rank == 0:
-            self.save_image(images_pred, images, batch['prompt'][0], batch['depth_inv_norm'].cpu().numpy(), batch_idx)
+            self.save_image(images_pred, images, batch['prompt'], batch['depth_inv_norm'].cpu().numpy(), batch_idx)
 
     @torch.no_grad()
     def inference_inp(self, batch):
@@ -387,7 +387,7 @@ class DepthGenerator(pl.LightningModule):
             img.paste(im_pred, (0, h))
             im = Image.fromarray(images[0, i])
             img.paste(im, (0, h * 2))
-            im_depth = Image.fromarray(plt.get_cmap('gray')(depth_inv_full[0, i])[..., :3].astype(np.int8))
+            im_depth = Image.fromarray(plt.get_cmap('gray')(depth_inv_full[0, i])[..., :3].astype(np.uint8))
             img.paste(im_depth, (0, 0))
 
             imgs.append(img)
