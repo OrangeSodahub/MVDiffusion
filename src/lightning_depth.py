@@ -378,22 +378,18 @@ class DepthGenerator(pl.LightningModule):
 
     def save_image(self, images_pred, images, prompt, depth_inv_full, batch_idx):
 
-        img_dir = os.path.join(self.logger.save_dir, 'images')
-        os.makedirs(img_dir, exist_ok=True)
-        with open(os.path.join(img_dir, f'{self.global_step}_{batch_idx}.txt'), 'w') as f:
-            for p in prompt:
-                f.write(p)
-            
-        if images_pred is not None:
-            for m_i in range(images_pred.shape[1]):
-                im = Image.fromarray(images_pred[0, m_i])
-                im.save(os.path.join(
-                    img_dir, f'{self.global_step}_{batch_idx}_{m_i}_pred.png'))
+        n, h, w = images.shape[0][:3]
+        imgs = []
+        for i in range(n):
+            img = Image.new("RGB", size=(w, h * 3), color="black")
 
-        for m_i in range(images.shape[1]):
-            im = Image.fromarray(
-                images[0, m_i])
-            im.save(os.path.join(
-                img_dir, f'{self.global_step}_{batch_idx}_{m_i}_gt.png'))
-            plt.imsave(os.path.join(
-                img_dir, f'{self.global_step}_{batch_idx}_{m_i}_depth_inv.png'), depth_inv_full[0, m_i])
+            im_pred = Image.fromarray(images_pred[0, i])
+            img.paste(im_pred, (0, h))
+            im = Image.fromarray(images[0, i])
+            img.paste(im, (0, h * 2))
+            im_depth = Image.fromarray(plt.get_cmap('gray')(depth_inv_full[0, i])[..., :3])
+            img.paste(im_depth, (0, 0))
+
+            imgs.append(img)
+
+        self.logger.log_image("validation", imgs, caption=prompt)
