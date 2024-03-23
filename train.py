@@ -45,8 +45,8 @@ if __name__ == "__main__":
         train_dataset = Scannetdataset(config['dataset'], mode='train')
         val_dataset = Scannetdataset(config['dataset'], mode='val')
     elif config['dataset']['name'] == 'hypersim':
-        train_dataset = Scannetdataset(config['dataset'], mode='train')
-        val_dataset = Scannetdataset(config['dataset'], mode='all')
+        train_dataset = Hypersimdataset(config['dataset'], mode='train')
+        val_dataset = Hypersimdataset(config['dataset'], mode='all')
 
     train_loader = torch.utils.data.DataLoader(
         train_dataset, batch_size=config['train']['batch_size'], shuffle=True, num_workers=args.num_workers, drop_last=True)
