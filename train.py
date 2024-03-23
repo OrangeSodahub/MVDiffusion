@@ -3,7 +3,7 @@ import argparse
 from src.dataset import MP3Ddataset, Scannetdataset, Hypersimdataset
 import pytorch_lightning as pl
 from pytorch_lightning.callbacks import ModelCheckpoint
-from pytorch_lightning.loggers import TensorBoardLogger
+from pytorch_lightning.loggers import TensorBoardLogger, WandbLogger
 import yaml
 from src.lightning_pano_gen import PanoGenerator
 from src.lightning_depth import DepthGenerator
@@ -67,8 +67,7 @@ if __name__ == "__main__":
                                           mode="min", save_last=1,
                                           filename='epoch={epoch}-loss={train_loss:.4f}')
 
-    logger = TensorBoardLogger(
-        save_dir='logs/tb_logs', name=args.exp_name, default_hp_metric=False)
+    logger = WandbLogger(name=args.exp_name, project='caa')
 
     trainer = pl.Trainer.from_argparse_args(
         args,
