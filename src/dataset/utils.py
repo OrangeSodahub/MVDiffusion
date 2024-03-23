@@ -1,5 +1,19 @@
+import json
 import numpy as np
-import cv2 
+import cv2
+from pathlib import Path
+
+
+def load_from_jsonl(filename: Path):
+    assert filename.suffix == ".jsonl"
+    if not filename.exists():
+        return None
+
+    data = []
+    with open(filename, encoding="utf-8") as f:
+        for row in f:
+            data.append(json.loads(row))
+    return data
 
 
 def get_K_R(FOV, THETA, PHI, height, width):
