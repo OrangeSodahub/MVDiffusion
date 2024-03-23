@@ -2,6 +2,7 @@ import pytorch_lightning as pl
 from diffusers import AutoencoderKL, DDIMScheduler, UNet2DConditionModel
 import torch
 import os
+import matplotlib.pyplot as plt
 from PIL import Image
 from transformers import CLIPTextModel, CLIPTokenizer
 import numpy as np
