@@ -183,6 +183,7 @@ class Hypersimdataset(torch.utils.data.Dataset):
 
     def __getitem__(self, idx):
         scene_id, sample_idx = self.data_list[idx]
+        scene_info = list(filter(lambda info: info['scene_id'] == scene_id, self.infos))
         
         if self.data_load_mode == 'fix_interval':
             image_paths = self.scene_kfs[scene_id]
@@ -211,7 +212,8 @@ class Hypersimdataset(torch.utils.data.Dataset):
         depths = depths.astype(np.float32)
         poses = poses.astype(np.float32)
         K = K.astype(np.float32)
-        
+
+        image_paths = [scene_info[i]['target'] for i in sample_idxs]
         return {
             'image_paths': image_paths,
             'mask': mask,
