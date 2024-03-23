@@ -1,6 +1,6 @@
 import torch
 import argparse
-from src.dataset import MP3Ddataset, Scannetdataset
+from src.dataset import MP3Ddataset, Scannetdataset, Hypersimdataset
 import pytorch_lightning as pl
 from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning.loggers import TensorBoardLogger
@@ -44,6 +44,9 @@ if __name__ == "__main__":
     elif config['dataset']['name'] == 'scannet':
         train_dataset = Scannetdataset(config['dataset'], mode='train')
         val_dataset = Scannetdataset(config['dataset'], mode='val')
+    elif config['dataset']['name'] == 'hypersim':
+        train_dataset = Scannetdataset(config['dataset'], mode='train')
+        val_dataset = Scannetdataset(config['dataset'], mode='all')
 
     train_loader = torch.utils.data.DataLoader(
         train_dataset, batch_size=config['train']['batch_size'], shuffle=True, num_workers=args.num_workers, drop_last=True)

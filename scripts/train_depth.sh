@@ -12,7 +12,7 @@ torch_num_workers=8
 batch_size=1
 exp_name="train_depth=$(($n_gpus_per_node * $n_nodes * $batch_size))"
 
-python -u ./train.py configs/depth_generation_train.yaml \
+python -u ./train.py configs/depth_generation_train2.yaml \
     ${data_cfg_path} \
     ${main_cfg_path} \
     --exp_name=${exp_name} \
