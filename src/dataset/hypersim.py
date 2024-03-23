@@ -5,7 +5,7 @@ import random
 import numpy as np
 import copy
 from pathlib import Path
-from utils import load_from_jsonl
+from src.dataset.utils import load_from_jsonl
 
 
 class Hypersimdataset(torch.utils.data.Dataset):
