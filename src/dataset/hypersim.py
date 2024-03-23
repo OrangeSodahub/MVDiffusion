@@ -147,7 +147,7 @@ class Hypersimdataset(torch.utils.data.Dataset):
             poses.append(pose)
             if np.isnan(np.linalg.inv(pose)).any():
                 return self.__getitem__(torch.randint(0, len(self.data_list), (1,)).item())
-            prompts.append(info["caption"])
+            prompts.append(scene_info[idx]["caption"])
             depths.append(info["depths"])
 
         poses = np.stack(poses, axis=0)  # [num_views, 4, 4]
