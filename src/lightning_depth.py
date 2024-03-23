@@ -341,7 +341,7 @@ class DepthGenerator(pl.LightningModule):
         scene_name = image_paths[0][0].split('/')[-3]
         key_id = image_paths[0][0].split('/')[-1].split('.')[0]
         output_dir = os.path.join(
-            self.logger.log_dir, 'images', '{}_{}'.format(scene_name, key_id))
+            self.logger.save_dir, 'images', '{}_{}'.format(scene_name, key_id))
         os.makedirs(output_dir, exist_ok=True)
         
         images = ((batch['images']+1)
@@ -378,7 +378,7 @@ class DepthGenerator(pl.LightningModule):
 
     def save_image(self, images_pred, images, prompt, depth_inv_full, batch_idx):
 
-        img_dir = os.path.join(self.logger.log_dir, 'images')
+        img_dir = os.path.join(self.logger.save_dir, 'images')
         os.makedirs(img_dir, exist_ok=True)
         with open(os.path.join(img_dir, f'{self.global_step}_{batch_idx}.txt'), 'w') as f:
             for p in prompt:
