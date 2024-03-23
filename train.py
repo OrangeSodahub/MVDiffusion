@@ -67,7 +67,8 @@ if __name__ == "__main__":
                                           mode="min", save_last=1,
                                           filename='epoch={epoch}-loss={train_loss:.4f}')
 
-    logger = WandbLogger(name=args.exp_name, project='caa')
+    logger = TensorBoardLogger(
+        save_dir='logs/tb_logs', name=args.exp_name, default_hp_metric=False)
 
     trainer = pl.Trainer.from_argparse_args(
         args,
