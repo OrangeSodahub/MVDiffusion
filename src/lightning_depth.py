@@ -378,7 +378,7 @@ class DepthGenerator(pl.LightningModule):
 
     def save_image(self, images_pred, images, prompt, depth_inv_full, batch_idx):
 
-        n, h, w = images.shape[0][:3]
+        n, h, w = images[0].shape[:3]
         imgs = []
         for i in range(n):
             img = Image.new("RGB", size=(w, h * 3), color="black")
