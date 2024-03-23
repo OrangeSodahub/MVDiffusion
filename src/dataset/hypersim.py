@@ -196,7 +196,7 @@ class Hypersimdataset(torch.utils.data.Dataset):
             else:
                 sample_idxs = self._get_consecutive_kfs_fix_frame(
                     scene_id, sample_idx)
-                mask = np.ones(len(image_paths)).astype(np.bool)
+                mask = np.ones(len(sample_idxs)).astype(np.bool)
         elif self.data_load_mode=='two_stage':
             image_paths, mask=self._get_consecutive_kfs_inp(
                 scene_id, img_path)

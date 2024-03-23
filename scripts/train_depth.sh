@@ -25,4 +25,4 @@ python -u ./train.py configs/depth_generation_train2.yaml \
     --max_epochs=5 \
     --val_check_interval=0.5 \
     --gradient_clip_val=1.0 \
-    --ckpt_path weights/depth_single_view.ckpt
+    #--ckpt_path weights/depth_single_view.ckpt
