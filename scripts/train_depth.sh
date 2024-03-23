@@ -23,6 +23,6 @@ python -u ./train.py configs/depth_generation_train2.yaml \
     --num_sanity_val_steps=0 \
     --benchmark=True \
     --max_epochs=5 \
-    --val_check_interval=0.5 \
+    --val_check_interval=0.02 \
     --gradient_clip_val=1.0 \
     #--ckpt_path weights/depth_single_view.ckpt
