@@ -15,6 +15,7 @@ class Hypersimdataset(torch.utils.data.Dataset):
         self.data_list = []
         self.scene_kfs = dict()
         self.valid_ids = dict()
+        self.num_views = config['num_views']
         jsonl_path = os.path.join(config['root_dir'], f'{mode}.jsonl')
 
         self.infos = load_from_jsonl(Path(jsonl_path))
