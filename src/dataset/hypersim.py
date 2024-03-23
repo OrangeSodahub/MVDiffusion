@@ -134,7 +134,7 @@ class Hypersimdataset(torch.utils.data.Dataset):
 
     def load_seq(self, scene_id, sample_idxs, resolution):
         scene_info = list(filter(lambda info: info['scene_id'] == scene_id, self.infos))
-        images_ori = [cv2.cvtColor(cv2.imread(scene_info[i])[..., :3], cv2.COLOR_BGR2RGB)
+        images_ori = [cv2.cvtColor(cv2.imread(scene_info[i]['target'])[..., :3], cv2.COLOR_BGR2RGB)
                       for i in sample_idxs]
 
         # load pose
