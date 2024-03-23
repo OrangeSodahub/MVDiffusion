@@ -1,7 +1,7 @@
 dataset:
   name: hypersim
   num_views: 12
-  hypersim_root_dir: data/hypersim
+  root_dir: data/hypersim
   resolution_h: 192
   resolution_w: 256
   data_load_mode: fix_frame
