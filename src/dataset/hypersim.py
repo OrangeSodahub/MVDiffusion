@@ -98,39 +98,33 @@ class Hypersimdataset(torch.utils.data.Dataset):
 
         return kf_ids
     
-    def _get_consecutive_kfs_inp(self, scene_id, img_path):
-        valid_ids=self.valid_ids[scene_id]
-        scene_kfs=self.scene_kfs[scene_id]
+    def _get_consecutive_kfs_inp(self, scene_id, sample_idx):
+        scene_kfs = self.scene_kfs[scene_id]
         num_kfs = len(scene_kfs)
-        idx_base = scene_kfs.index(img_path)
-        num_views=2
+        idx_base = scene_kfs.index(sample_idx)
+        num_views = 2
         if idx_base + num_views >= num_kfs:
-            idx_base=num_kfs-num_views-1
+            idx_base = num_kfs - num_views - 1
         idx_list = [idx_base, idx_base + num_views]
-        img_key1=scene_kfs[idx_list[0]]
-        img_key2=scene_kfs[idx_list[1]]
-        img_paths = [img_key1]
+        idx1 = scene_kfs[idx_list[0]]
+        idx2 = scene_kfs[idx_list[1]]
+        sample_idxs = [idx1]
 
-        idx1=int(img_key1.split('/')[-1].split('.')[0])
-        idx2=int(img_key2.split('/')[-1].split('.')[0])
-
-        _idx_list=list(range(idx1+1, idx2-1))
+        _idx_list = list(range(idx1 + 1, idx2 - 1))
         random.shuffle(_idx_list)
         
         for idx in _idx_list:
-            if idx in valid_ids:
-                img_paths.append(os.path.join(
-                    '/'.join(img_path.split('/')[:-1]), str(idx)+'.jpg'))
-            if len(img_paths)==self.num_views-1:
+            sample_idxs.append(idx)
+            if len(sample_idxs) == self.num_views-1:
                 break
-        if len(img_paths)!=self.num_views-1:
-            img_paths=img_paths+[img_paths[-1]]*(self.num_views-len(img_paths)-1)
-        img_paths.append(img_key2)
-        mask=np.zeros(len(img_paths)).astype(np.bool)
-        mask[0]=True
-        mask[-1]=True
+        if len(sample_idxs) != self.num_views - 1:
+            sample_idxs = sample_idxs + [sample_idxs[-1]] * (self.num_views - len(sample_idxs) - 1)
+        sample_idxs.append(idx2)
+        mask = np.zeros(len(sample_idxs))
+        mask[0] = True
+        mask[-1] = True
 
-        return img_paths, mask
+        return sample_idxs, mask
 
     def load_seq(self, scene_id, sample_idxs, resolution):
         scene_info = list(filter(lambda info: info['scene_id'] == scene_id, self.infos))
@@ -186,21 +180,20 @@ class Hypersimdataset(torch.utils.data.Dataset):
         scene_info = list(filter(lambda info: info['scene_id'] == scene_id, self.infos))
         
         if self.data_load_mode == 'fix_interval':
-            image_paths = self.scene_kfs[scene_id]
+            sample_idxs = self.scene_kfs[scene_id]
             mask = np.ones(len(image_paths)).astype(np.bool)
         elif self.data_load_mode == 'fix_frame':
-            # p_rand = random.random()
-            p_rand = 0
+            p_rand = random.random()
             if self.mode == 'train' and p_rand > self.gen_data_ratio:
-                image_paths, mask = self._get_consecutive_kfs_inp(
-                    scene_id, img_path)
+                sample_idxs, mask = self._get_consecutive_kfs_inp(
+                    scene_id, sample_idx)
             else:
                 sample_idxs = self._get_consecutive_kfs_fix_frame(
                     scene_id, sample_idx)
                 mask = np.ones(len(sample_idxs))
         elif self.data_load_mode=='two_stage':
-            image_paths, mask=self._get_consecutive_kfs_inp(
-                scene_id, img_path)
+            sample_idxs, mask = self._get_consecutive_kfs_inp(
+                scene_id, sample_idx)
 
         images, depths, depth_inv_norm, poses, K, prompts = self.load_seq(
             scene_id, sample_idxs, self.resolution)
