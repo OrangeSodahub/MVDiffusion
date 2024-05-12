@@ -119,17 +119,31 @@ images=torch.zeros((1,8,resolution,resolution, 3)).cuda()
 if img is not None:
     images[0,0]=img
 
+# if args.text_path is not None:
+#     prompt=[]
+#     with open(args.text_path, 'r') as f:
+#         for i, line in enumerate(f):
+#             prompt.append(line.strip())
+#     if len(prompt)<8:
+#         raise ValueError('text file should contain 8 lines for each camera view')
+#     args.text=prompt[0]
+# else:
+#     prompt=[args.text]*8
 
-if args.text_path is not None:
-    prompt=[]
-    with open(args.text_path, 'r') as f:
-        for i, line in enumerate(f):
-            prompt.append(line.strip())
-    if len(prompt)<8:
-        raise ValueError('text file should contain 8 lines for each camera view')
-    args.text=prompt[0]
+if args.text is not None:
+    prompt = [args.text] * 8
 else:
-    prompt=[args.text]*8
+    prompt = [
+        "a red bed next to a gray wall",
+        "a small bathroom in the scene",
+        "a door next to a cabinet and the small bathroom",
+        "a small table next to the cabinet",
+        "the wall in single color",
+        "a L-shape desk with a chair next to the wall",
+        "a curtain hanging on the wall",
+        "small items lie in the corner of the wall",
+    ],
+
 K=torch.tensor(Ks).cuda()[None]
 R=torch.tensor(Rs).cuda()[None]
 

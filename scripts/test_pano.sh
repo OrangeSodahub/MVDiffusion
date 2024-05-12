@@ -11,9 +11,9 @@ n_nodes=1
 n_gpus_per_node=1
 torch_num_workers=0
 batch_size=1
-exp_name="test_mp3d=$(($n_gpus_per_node * $n_nodes * $batch_size))"
+exp_name="val=$(($n_gpus_per_node * $n_nodes * $batch_size))"
 
-CUDA_VISIBLE_DEVICES='4' python -u ./test.py configs/pano_generation.yaml \
+python -u ./test.py configs/pano_generation.yaml \
     ${data_cfg_path} \
     ${main_cfg_path} \
     --exp_name=${exp_name} \
