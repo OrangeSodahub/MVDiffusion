@@ -35,7 +35,7 @@ def parse_args():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument(
-        '--text', type=str, default='This kitchen is a charming blend of rustic and modern, featuring a large reclaimed wood island with marble countertop, a sink surrounded by cabinets. To the left of the island, a stainless-steel refrigerator stands tall. To the right of the sink, built-in wooden cabinets painted in a muted.')
+        '--text', type=str, default=None, required=False)
     parser.add_argument(
         '--image_path', type=str, default=None, help='image condition outpainting')
     parser.add_argument('--gen_video',
