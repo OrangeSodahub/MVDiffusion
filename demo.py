@@ -142,7 +142,7 @@ else:
         "a L-shape desk with a chair next to the wall",
         "a curtain hanging on the wall",
         "small items lie in the corner of the wall",
-    ],
+    ]
 
 K=torch.tensor(Ks).cuda()[None]
 R=torch.tensor(Rs).cuda()[None]
