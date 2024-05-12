@@ -143,6 +143,8 @@ else:
         "a curtain hanging on the wall",
         "small items lie in the corner of the wall",
     ]
+    args.text = ", ".join(prompt)
+    print(args.text)
 
 K=torch.tensor(Ks).cuda()[None]
 R=torch.tensor(Rs).cuda()[None]
