@@ -1,6 +1,6 @@
 import torch
 import argparse
-from src.dataset import MP3Ddataset, Scannetdataset
+from src.dataset import MP3Ddataset, Scannetdataset, DummyDataset
 import pytorch_lightning as pl
 import yaml
 from src.lightning_pano_gen import PanoGenerator
@@ -49,6 +49,8 @@ if __name__ == "__main__":
             config['dataset'], mode=mode)
     elif config['dataset']['name'] == 'scannet':
         dataset = Scannetdataset(config['dataset'], mode=mode)
+    elif config['dataset']['name'] == 'dummy':
+        dataset = DummyDataset(config['dataset'])
 
     data_loader = torch.utils.data.DataLoader(
         dataset, batch_size=1, shuffle=False, num_workers=args.num_workers, drop_last=False)

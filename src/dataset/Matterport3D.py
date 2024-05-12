@@ -128,4 +128,67 @@ class MP3Ddataset(torch.utils.data.Dataset):
             'R': R,
             'K': K
         }
+
+
+class DummyDataset(torch.utils.data.Dataset):
+    def __ini__(self, config):
+        random.seed(config['seed'])
+
+        self.vx = [-90, 270, 0, 90, 180, -90]
+        self.vy = [90, 0, 0, 0, 0, -90]
+        self.fov = config['fov']
+        self.rot = config['rot']
+        self.resolution = config['resolution']
+
+        # self-defined data
+        self.data = [
+            {
+                "scene": "This is one view of a red and white bedroom, ",
+                "prompt": [
+                    "a red bed next to a gray wall",
+                    "a small bathroom in the scene",
+                    "a door next to a cabinet and the small bathroom",
+                    "a small table next to the cabinet",
+                    "the wall in single color",
+                    "a L-shape desk with a chair next to the wall",
+                    "a curtain hanging on the wall",
+                    "small items lie in the corner of the wall",
+                ],
+            }
+        ]
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, idx):
+        Rs = []
+        num_views=8
         
+        init_degree = 0
+        
+        for i in range(num_views):
+            _degree = (init_degree+self.rot*i) % 360
+
+            K, R = get_K_R(90, _degree, 0,
+                           self.resolution, self.resolution)
+            Rs.append(R)
+
+        K = np.stack([K]*len(Rs)).astype(np.float32)
+        R = np.stack(Rs).astype(np.float32)
+      
+        prompt = []
+        for i in range(num_views):
+            _degree = (init_degree+i*self.rot) % 360
+            _degree = int(np.round(_degree/45)*45) % 360
+
+            prompt.append(self.data[idx]['scene'] +
+                          self.data[idx]['prompt'][i])
+
+        dummy_images = np.zeros((num_views, self.resolution, self.resolution))
+
+        return {
+            'dummy_images': dummy_images,
+            'prompt': prompt,
+            'R': R,
+            'K': K
+        }

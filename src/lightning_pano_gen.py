@@ -171,9 +171,14 @@ class PanoGenerator(pl.LightningModule):
 
     @torch.no_grad()
     def inference(self, batch):
-        images = batch['images']
-        bs, m, h, w, _ = images.shape
-        device = images.device
+        if 'images' in batch:
+            images = batch['images']
+            bs, m, h, w, _ = images.shape
+            device = images.device
+        else:
+            dummy_images = batch["dummy_images"]
+            bs, m, h, w = dummy_images.shape
+            device = dummy_images.device
 
         latents= torch.randn(
             bs, m, 4, h//8, w//8, device=device)
