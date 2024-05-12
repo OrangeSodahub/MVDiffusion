@@ -9,7 +9,7 @@ import os
 os.environ['KMP_DUPLICATE_LIB_OK']='True'
 from generate_video_tool.pano_video_generation import generate_video
 from PIL import Image
-from exiftool import ExifToolHelper
+# from exiftool import ExifToolHelper
 from datetime import datetime
 
 torch.manual_seed(0)
@@ -65,44 +65,44 @@ def resize_and_center_crop(img, size):
     return img
 
 args = parse_args()
-if args.image_path is None:
-    config_file = 'configs/pano_generation.yaml'
-    config = yaml.load(open(config_file, 'rb'), Loader=yaml.SafeLoader)
-    model = PanoGenerator(config)
-    model.load_state_dict(torch.load('weights/pano.ckpt', map_location='cpu')['state_dict'], strict=True)
-    #saved_ckpt = torch.load('weights/pano.ckpt', map_location='cpu')
-    #model.load_state_dict(saved_ckpt, strict=False)
-    model=model.cuda()
-    img=None
-else:
+# if args.image_path is None:
+config_file = 'configs/pano_generation.yaml'
+config = yaml.load(open(config_file, 'rb'), Loader=yaml.SafeLoader)
+model = PanoGenerator(config)
+model.load_state_dict(torch.load('weights/pano.ckpt', map_location='cpu')['state_dict'], strict=True)
+#saved_ckpt = torch.load('weights/pano.ckpt', map_location='cpu')
+#model.load_state_dict(saved_ckpt, strict=False)
+model=model.cuda()
+img=None
+# else:
 
-    config_file = 'configs/pano_generation_outpaint.yaml'
-    config = yaml.load(open(config_file, 'rb'), Loader=yaml.SafeLoader)
-    model = PanoOutpaintGenerator(config)
-    model.load_state_dict(torch.load('weights/pano_outpaint.ckpt', map_location='cpu')['state_dict'], strict=True)
-    #saved_ckpt = torch.load('weights/pano_outpaint.ckpt', map_location='cpu')
-    #model.load_state_dict(saved_ckpt, strict=False)
-    model=model.cuda()
+#     config_file = 'configs/pano_generation_outpaint.yaml'
+#     config = yaml.load(open(config_file, 'rb'), Loader=yaml.SafeLoader)
+#     model = PanoOutpaintGenerator(config)
+#     model.load_state_dict(torch.load('weights/pano_outpaint.ckpt', map_location='cpu')['state_dict'], strict=True)
+#     #saved_ckpt = torch.load('weights/pano_outpaint.ckpt', map_location='cpu')
+#     #model.load_state_dict(saved_ckpt, strict=False)
+#     model=model.cuda()
 
-    img=cv2.imread(args.image_path)
-    img=cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    img=resize_and_center_crop(img, config['dataset']['resolution'])
-    img=img/127.5-1       
-    img=torch.tensor(img).cuda()
+#     img=cv2.imread(args.image_path)
+#     img=cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+#     img=resize_and_center_crop(img, config['dataset']['resolution'])
+#     img=img/127.5-1       
+#     img=torch.tensor(img).cuda()
     
-    #read stable diffusion prompts from PNG
-    with ExifToolHelper() as et:
-        #print EXIF metadata
-        EXIF_dict = et.get_metadata(args.image_path)
-        print(f'Metadata: {EXIF_dict}')        
-        if 'PNG:Parameters' in EXIF_dict[0]:
-            PNGparameters = EXIF_dict[0]['PNG:Parameters']
-            parsed_parameters = PNGparameters.split("\n")        
-            positive_prompt = parsed_parameters[0]
-            negative_prompt = parsed_parameters[1]
-            print(f'Positive promts: ' +  positive_prompt)
-            print(f'Negative promts: ' +  negative_prompt)
-            args.text= positive_prompt
+#     #read stable diffusion prompts from PNG
+#     with ExifToolHelper() as et:
+#         #print EXIF metadata
+#         EXIF_dict = et.get_metadata(args.image_path)
+#         print(f'Metadata: {EXIF_dict}')        
+#         if 'PNG:Parameters' in EXIF_dict[0]:
+#             PNGparameters = EXIF_dict[0]['PNG:Parameters']
+#             parsed_parameters = PNGparameters.split("\n")        
+#             positive_prompt = parsed_parameters[0]
+#             negative_prompt = parsed_parameters[1]
+#             print(f'Positive promts: ' +  positive_prompt)
+#             print(f'Negative promts: ' +  negative_prompt)
+#             args.text= positive_prompt
     
 resolution=config['dataset']['resolution']
 Rs=[]
