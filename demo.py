@@ -147,14 +147,14 @@ if args.text is not None:
     prompt = [args.text] * 8
 else:
     prompt = [
-        "This is one view of a bedroom in Vangogh painting style, a dresser against the wall",
-        "This is one view of a bedroom in Vangogh painting style, a dresser next to the wall and the bed is in front of it",
-        "This is one view of a bedroom in Vangogh painting style, a bed next to the window and a nightstand nearby the bed",
-        "This is one view of a bedroom in Vangogh painting style, another nightstand next to the bed and the wall and a picture hanging on the wall",
-        "This is one view of a bedroom in Vangogh painting style, the corner of the wall and a nightstand against the wall",
-        "This is one view of a bedroom in Vangogh painting style, the wall in single color",
-        "This is one view of a bedroom in Vangogh painting style, the wall in single color",
-        "This is one view of a bedroom in Vangogh painting style, the wall in single color",
+        "This is one view of a bedroom in weak Vangogh painting style, a dresser against the wall",
+        "This is one view of a bedroom in weak Vangogh painting style, a dresser next to the wall and the bed is in front of it",
+        "This is one view of a bedroom in weak Vangogh painting style, a bed next to the window and a nightstand nearby the bed",
+        "This is one view of a bedroom in weak Vangogh painting style, another nightstand next to the bed and the wall and a picture hanging on the wall",
+        "This is one view of a bedroom in weak Vangogh painting style, the corner of the wall and a nightstand against the wall",
+        "This is one view of a bedroom in weak Vangogh painting style, the wall in single color",
+        "This is one view of a bedroom in weak Vangogh painting style, the wall in single color",
+        "This is one view of a bedroom in weak Vangogh painting style, the wall in single color",
     ]
     args.text = ", ".join(prompt)
     print(args.text)
