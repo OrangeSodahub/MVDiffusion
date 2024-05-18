@@ -3,8 +3,8 @@ dataset:
   image_root_dir: data/mp3d_skybox
   fov: 90
   rot: 45
-  resolution: 768
-  crop_size: 768
+  resolution: 512
+  crop_size: 512
   seed: 0
 train:
   lr: 0.0002
