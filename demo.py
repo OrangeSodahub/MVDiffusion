@@ -109,7 +109,7 @@ Rs=[]
 Ks=[]
 for i in range(8):
     degree = (45*i) % 360
-    K, R = get_K_R(90, degree, 0,
+    K, R = get_K_R(60, degree, 0,
                     resolution, resolution)
 
     Rs.append(R)
@@ -130,20 +130,33 @@ if img is not None:
 # else:
 #     prompt=[args.text]*8
 
+# exp3
+    # prompt = [
+    #     "a dresser against the wall",
+    #     "a dresser next to the wall and the bed is in front of it",
+    #     "a bed next to the window and a nightstand nearby the bed",
+    #     "another nightstand next to the bed and the wall and a picture hanging on the wall",
+    #     "the corner of the wall and a nightstand against the wall",
+    #     "the wall in single color",
+    #     "the wall in single color",
+    #     "the wall in single color",
+    # ]
+    # args.text = "This is one view of a bedroom in Vangogh painting style, ".join(prompt)
+
 if args.text is not None:
     prompt = [args.text] * 8
 else:
     prompt = [
-        "a red bed next to a gray wall",
-        "a small bathroom in the scene",
-        "a door next to a cabinet and the small bathroom",
-        "a small table next to the cabinet",
+        "a dresser against the wall",
+        "a dresser next to the wall and the bed is in front of it",
+        "a bed next to the window and a nightstand nearby the bed",
+        "another nightstand next to the bed and the wall and a picture hanging on the wall",
+        "the corner of the wall and a nightstand against the wall",
         "the wall in single color",
-        "a L-shape desk with a chair next to the wall",
-        "a curtain hanging on the wall",
-        "small items lie in the corner of the wall",
+        "the wall in single color",
+        "the wall in single color",
     ]
-    args.text = ", ".join(prompt)
+    args.text = "This is one view of a bedroom in Vangogh painting style, ".join(prompt)
     print(args.text)
 
 K=torch.tensor(Ks).cuda()[None]
