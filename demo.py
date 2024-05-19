@@ -147,14 +147,14 @@ if args.text is not None:
     prompt = [args.text] * 8
 else:
     prompt = [
-        "This is one view of a bedroom in the hues of a Vangogh painting, a dresser against the wall",
-        "This is one view of a bedroom in the hues of a Vangogh painting, a dresser next to the wall and the bed is in front of it",
-        "This is one view of a bedroom in the hues of a Vangogh painting, a bed next to the window and a nightstand nearby the bed",
-        "This is one view of a bedroom in the hues of a Vangogh painting, another nightstand next to the bed and the wall and a picture hanging on the wall",
-        "This is one view of a bedroom in the hues of a Vangogh painting, the corner of the wall and a nightstand against the wall",
-        "This is one view of a bedroom in the hues of a Vangogh painting, the wall in single color",
-        "This is one view of a bedroom in the hues of a Vangogh painting, the wall in single color",
-        "This is one view of a bedroom in the hues of a Vangogh painting, the wall in single color",
+        "This is one view of a livingroom in blue-green tone, a cabinet hanging on the wall and another cabinet on the floor, a table next to the cabinet on the floor and a lamp, books and other items on the cabinet, another table in front of them.",
+        "This is one view of a livingroom in blue-green tone, a bottle sitting in the corner and the table is on the right of it, a blinds is hanging on the wall next to the bottle.",
+        "This is one view of a livingroom in blue-green tone, a blinds is hanging on the wall and nearly cover the whole wall, a tall lamp is in front of the wall, a sofa with three pillows is in front of the lamp.",
+        "This is one view of a livingroom in blue-green tone, a half of blinds is hanging on the wall, a tall lamp is in front of the wall.",
+        "This is one view of a livingroom in blue-green tone, the corner of the wall and a nightstand against the wall",
+        "This is one view of a livingroom in blue-green tone, a wall in single color",
+        "This is one view of a livingroom in blue-green tone, a wall in single color with a door",
+        "This is one view of a livingroom in blue-green tone, a wall in single color",
     ]
     args.text = ", ".join(prompt)
     print(args.text)
