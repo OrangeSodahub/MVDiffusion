@@ -1,6 +1,6 @@
 dataset:
   name: 'mp3d'
-  image_root_dir: data/mp3d_skybox
+  image_root_dir: data/mp3d
   fov: 90
   rot: 45
   resolution: 512

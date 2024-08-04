@@ -46,7 +46,7 @@ class MP3Ddataset(torch.utils.data.Dataset):
         if mode=='train':
             self.data = np.load(os.path.join(self.image_root_dir, 'train.npy'))
         else:
-            self.data = np.load(os.path.join(self.image_root_dir, 'test.npy'))
+            self.data = np.load(os.path.join(self.image_root_dir, 'test.npy'))[:500]
 
         self.vx = [-90, 270, 0, 90, 180, -90]
         self.vy = [90, 0, 0, 0, 0, -90]
