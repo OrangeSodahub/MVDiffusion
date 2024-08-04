@@ -23,6 +23,7 @@ def parse_args():
                         help='Number of workers for dataloader')
     parser.add_argument('--batch_size', type=int, default=4,
                         help='Batch size')
+    parser.add_argument('--subset_size', type=int, default=500)
 
     return parser.parse_args()
 
@@ -84,7 +85,7 @@ if __name__ == '__main__':
     args = parse_args()
 
     fid = FrechetInceptionDistance(feature=2048).cuda()
-    kid = KernelInceptionDistance(feature=2048).cuda()
+    kid = KernelInceptionDistance(feature=2048, subset_size=args.subset_size).cuda()
     inception = InceptionScore().cuda()
 
     dataset = MVResultDataset(args.result_dir)
